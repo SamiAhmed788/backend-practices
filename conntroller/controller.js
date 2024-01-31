@@ -45,6 +45,14 @@ export const forgetPasswordController = (req, res) => {
     })
 }
 export const signupController = (req, res) => {
+    
+    const { userEmail, password , username} = req.body
+    if (!userEmail || !password  ) return res.status(400).json({
+        status: false,
+        message: "Missing Fields"})
+
+
+
     res.json({
         status: true,
         message: "forget Password Successfully"
