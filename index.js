@@ -5,7 +5,7 @@ import { dbConnection } from "./utils/config.js"
 
 const app = express()
 
-app.use("/auth",authRoute )
+app.use("/auth", authRoute )
 
 dbConnection()
 

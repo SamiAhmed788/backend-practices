@@ -1,3 +1,20 @@
+
+import User from "../model/uder.js"
+
+export const signupController = async (req, res) => {
+try {
+    const uzer = await new User({
+      
+
+    })
+    await uzer.save()
+
+} catch (error) {
+    res.send("not connected");
+}
+  
+}
+
 export const loginController = async (req, res) => {
     try {
         const { userEmail, password } = req.body
@@ -39,20 +56,6 @@ export const logoutController = (req, res) => {
     })
 }
 export const forgetPasswordController = (req, res) => {
-    res.json({
-        status: true,
-        message: "forget Password Successfully"
-    })
-}
-export const signupController = (req, res) => {
-    
-    const { userEmail, password , username} = req.body
-    if (!userEmail || !password  ) return res.status(400).json({
-        status: false,
-        message: "Missing Fields"})
-
-
-
     res.json({
         status: true,
         message: "forget Password Successfully"
