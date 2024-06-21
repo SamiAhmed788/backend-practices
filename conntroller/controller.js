@@ -1,53 +1,41 @@
-
+import bcrypt from "bcrypt"
 import User from "../model/uder.js"
 
 export const signupController = async (req, res) => {
-try {
-    const uzer = await new User({
-      
+    
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(req.body.password, salt)
 
-    })
-    await uzer.save()
+    const user = new User({
+        userName: req.body.userName,
+        email: req.body.email,
+        password: hashedPassword,
+    });
+    
+    user.save()
 
-} catch (error) {
-    res.send("not connected");
-}
-  
+        .then((savedUser) => {
+          
+            res.status(200).json(savedUser);
+        })
+        .catch((error) => {
+            res.status(400).json(error);
+        });
 }
 
 export const loginController = async (req, res) => {
     try {
-        const { userEmail, password } = req.body
-        if (!userEmail || !password) return res.status(400).json({
-            status: false,
-            message: "Missing Fields"
-        })
+        const user = await User.findOne({email: req.body.email});
+        !user && res.status(404).json("USER NOT FOUND")
 
-        const isUserExist = await UsersSchema.findOne({ email: userEmail })
-        console.log(isUserExist, "====>>> isUserExist")
-        if (isUserExist) {
-            if (isUserExist.password === password) return res.status(200).json({
-                status: true,
-                message: "User Found"
-            })
+        const validPassword = await bcrypt.compare(req.body.password, user.password);
+        !validPassword && res.status(400).json("wrong")
 
-            res.status(400).json({
-                status: false,
-                message: "Invalid Credentials"
-            })
-
-        } else {
-            res.status(400).json({
-                status: false,
-                message: "User Not Found"
-            })
-        }
+res.status(200).json(user)
     } catch (error) {
-        res.status(500).json({
-            status: false,
-            message: "Internal Server Error"
-        })
+        console.log(error);
     }
+  
 }
 export const logoutController = (req, res) => {
     res.json({

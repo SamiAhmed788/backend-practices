@@ -4,9 +4,8 @@ import { forgetPasswordController, loginController, logoutController, signupCont
 const authRoute =  express.Router()
 
 
-authRoute.get("/signup", signupController)
+authRoute.post("/signup", signupController)
 authRoute.post("/login", loginController)
 authRoute.post("/logout", logoutController)
 authRoute.put("/forgetPassword", forgetPasswordController)
-
 export { authRoute }

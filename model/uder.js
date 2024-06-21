@@ -33,10 +33,23 @@ const UsersSchema = new mongoose.Schema(
                 type: Array,
                 default: []
                },
+                 followings:{
+                type: Array,
+                default: []
+               },
         isAdmin:{
                   type: Boolean,
                   default : false
-        }       
+        } ,desc:{
+            type: String,
+            min : 50
+    },    from:{
+        type: String,
+        min : 50
+}, relationship:{
+    type: Number,
+    enum : [1,2,3]
+},           
         
     },
     { timestamps: true } 
